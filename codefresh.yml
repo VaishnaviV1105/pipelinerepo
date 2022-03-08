@@ -4,7 +4,6 @@ stages:
   - "clone"
   - "prepare"
   - "plan"
-  - "approval for apply"
   - "deploy"
 
 steps:
@@ -38,11 +37,6 @@ steps:
         - terraform plan
     stage: plan
 
-  askForPermissionForApply:
-   type: pending-approval
-   title: Terraform apply ?
-   stage: approval for apply
-
   deploy:
     title: Terraform Apply
     type: freestyle
@@ -52,10 +46,4 @@ steps:
       commands:
         - terraform init
         - terraform apply -auto-approve
-      when:
-        steps:
-          - name: askForPermissionForApply
-            on:
-             - approved
-
     stage: "deploy"
